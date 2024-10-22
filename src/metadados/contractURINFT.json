@@ -1,7 +1,17 @@
 {
   "name": "NFT TIMTIN",
-  "description": "Esta é uma coleção exclusiva de NFT TIMTIN, datada de 1929.",
-  "image": "https://sapphire-accepted-dragonfly-363.mypinata.cloud/ipfs/QmTXfHaniUYmDtWgko1HHEtPvb1cMp4TepPC5fbQ8DChvF",
-  "seller_fee_basis_points": 1000,
-  "fee_recipient": "0x57b9ED9220c6F130b32706c983488AECaE795721"
-  }
+  "description": "Make in 1929.",
+  "image": "https://yellow-glad-meadowlark-949.mypinata.cloud/ipfs/QmeRMn7dJRXoz9LkT89WBdNVanq1DffsmzcwjokexF73R6",
+  "seller_fee_basis_points": 500,
+  "fee_recipient": "0x57b9ED9220c6F130b32706c983488AECaE795721",
+  "team": {
+    "name": "LucasMoraes2024",
+    "role": "Dev Blockchain",
+    "linkedin": "https://linkedin.com/in/Josuebastos",
+    "github": "https://github.com/learnbcool"
+  },
+  "category": "Comics",
+  "tags": ["1929", "Books", "Collectibles", "NFT", "Multiple Types"],
+  "release_date": "2024-21-10",
+  "token_standard": "ERC-721"
+}

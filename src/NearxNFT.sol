@@ -1,31 +1,64 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+// Compatible with OpenZeppelin Contracts ^5.0.0
+pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
-contract NearxNFT is ERC721URIStorage {
-    uint256 public tokenCounter; // Contador de NFT criados
-    string public contractURI = "https://sapphire-accepted-dragonfly-363.mypinata.cloud/ipfs/QmeUwAy6TUkHMzob8Np1ZS3zUtqazH4SktrZ2Aca3RB1MQ";   // URI do contrato
-    string public nftTokenURI = "https://sapphire-accepted-dragonfly-363.mypinata.cloud/ipfs/Qmcd9TKbTvG2168mU8Mb3LQ7w1A6p35fzFKgyiZLdnULCd";   // URI do token
+contract NearxNFT is ERC721, ERC721Enumerable {
+    constructor() ERC721("MyToken", "MTK") {}
 
-    // Evento para emitir o nome do usuario e o endereco da wallet
-    event UserMinted(address indexed userAddress, string userName);
-
-    constructor() ERC721("NFTNEARX", "NFT") {
-        tokenCounter = 0;
+    function _baseURI() internal pure override returns (string memory) {
+        return
+            "https://yellow-glad-meadowlark-949.mypinata.cloud/ipfs/QmQroPEZMT8uTWb8qhK2yJLsCkWGHN9wvdf8A76F6ixGYR";
     }
 
-    // Funcao para mintar um NFT
-    function mintNFT() public {
-        tokenCounter += 1;
-        uint256 newTokenId = tokenCounter;
-        _safeMint(_msgSender(), newTokenId);
-        _setTokenURI(newTokenId, nftTokenURI);
+    // Supply máximo e preço do NFT
+    uint256 public constant MAX_SUPPLY = 10;
+    uint256 public nftPrice = 1000000000000000000; // 1 MATIC
+
+    // Evento para notificar compra do NFT
+    event NFTBought(address indexed buyer, uint256 tokenId);
+
+    // The following functions are overrides required by Solidity.
+
+    function _update(
+        address to,
+        uint256 tokenId,
+        address auth
+    ) internal override(ERC721, ERC721Enumerable) returns (address) {
+        return super._update(to, tokenId, auth);
     }
 
-    // Funcao separada para adicionar o nome do usuario e emitir o evento
-    function addUserName(string memory userName) public {
-        // Emitir o evento com o nome do usuario e o endereco
-        emit UserMinted(_msgSender(), userName);
+    function _increaseBalance(
+        address account,
+        uint128 value
+    ) internal override(ERC721, ERC721Enumerable) {
+        super._increaseBalance(account, value);
+    }
+
+    function supportsInterface(
+        bytes4 interfaceId
+    ) public view override(ERC721, ERC721Enumerable) returns (bool) {
+        return super.supportsInterface(interfaceId);
+    }
+
+    // Função de compra, pode ser chamada a partir do frontend
+    function buyNFT() external payable {
+        require(totalSupply() < MAX_SUPPLY, "Todas as NFTs foram vendidas!");
+        require(msg.value >= nftPrice, "Valor insuficiente para comprar o NFT");
+
+        // Mintar o novo NFT (o ID será totalSupply() para garantir unicidade)
+        uint256 tokenId = totalSupply() + 1;
+        _safeMint(msg.sender, tokenId);
+
+        // Emitir evento
+        emit NFTBought(msg.sender, tokenId);
+    }
+
+    // Função para retornar o supply restante
+    function remainingSupply() external view returns (uint256) {
+        return MAX_SUPPLY - totalSupply();
     }
 }
+
