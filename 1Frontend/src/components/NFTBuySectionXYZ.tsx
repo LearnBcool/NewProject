@@ -4,6 +4,7 @@ import ContractData from "./abis/NFTContractData.json";
 import NFTContract1Data from "./abis/NFTContract1Data.json";
 import NFTContract2Data from "./abis/NFTContract2Data.json";
 
+
 const NFTBuySection = () => {
   const [isConnecting, setIsConnecting] = useState(false);
   const [account, setAccount] = useState<string | null>(null);
@@ -116,13 +117,13 @@ const NFTBuySection = () => {
 
   return (
     <div className="text-center">
-      <div className="flex justify-center mb-4">
+      <div className="flex justify-center mb-8">
         <img src="https://sapphire-accepted-dragonfly-363.mypinata.cloud/ipfs/QmPWGzHxMHMmB8gHxfN4RokYiUsxbKydiCromebVkTFeyE" alt="Main NFT" className="w-40 h-40 rounded-md" />
       </div>
       <button
         onClick={account ? handleBuyNFT : connectToMetaMask}
         disabled={isConnecting || isBuying}
-        className="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded transition-colors disabled:opacity-50"
+        className="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-4 rounded transition-colors disabled:opacity-50"
       >
         {isConnecting
           ? "Connecting..."
@@ -133,13 +134,13 @@ const NFTBuySection = () => {
           : "Connect to MetaMask"}
       </button>
 
-      <div className="flex justify-around mt-6">
+      <div className="flex justify-around mt-8">
         <div className="flex flex-col items-center">
           <img src="https://sapphire-accepted-dragonfly-363.mypinata.cloud/ipfs/QmPWGzHxMHMmB8gHxfN4RokYiUsxbKydiCromebVkTFeyE" alt="NFT Contract 1" className="w-32 h-32 rounded-md mb-6" />
           <button
             onClick={account ? handleBuyNFTContract1 : connectToMetaMask}
             disabled={isConnecting || isBuying}
-            className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition-colors disabled:opacity-50"
+            className="bg-cyan-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition-colors disabled:opacity-50"
           >
             {isConnecting ? "Connecting..." : "Buy NFT 1 for 0.5 MATIC"}
           </button>
@@ -149,7 +150,7 @@ const NFTBuySection = () => {
           <button
             onClick={account ? handleBuyNFTContract2 : connectToMetaMask}
             disabled={isConnecting || isBuying}
-            className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition-colors disabled:opacity-50"
+            className="bg-cyan-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition-colors disabled:opacity-50"
           >
             {isConnecting ? "Connecting..." : "Buy NFT 2 for 0.5 MATIC"}
           </button>

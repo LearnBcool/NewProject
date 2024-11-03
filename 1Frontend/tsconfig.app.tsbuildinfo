@@ -1,0 +1,1 @@
+{"root":["./src/App.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/components/BuyNFTSectionXYZ.tsx","./src/components/Content.tsx","./src/components/CountdownTimer.tsx","./src/components/Footer.tsx","./src/components/Header.tsx","./src/components/NFTBuySection.tsx","./src/components/ParticlesBackground.tsx","./src/types/particlesConfig.ts"],"errors":true,"version":"5.6.3"}

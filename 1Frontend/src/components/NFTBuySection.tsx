@@ -46,7 +46,11 @@ const NFTBuySection = () => {
       setIsBuyingMainNFT(true);
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
-      const contract = new ethers.Contract(ContractData.contractAddress, ContractData.abi, signer);
+      const contract = new ethers.Contract(
+        ContractData.contractAddress,
+        ContractData.abi,
+        signer
+      );
 
       const nftPrice = ethers.parseUnits("0.5", "ether");
       const tx = await contract.buyNFT({ value: nftPrice });
@@ -71,7 +75,11 @@ const NFTBuySection = () => {
       setIsBuyingNFT1(true);
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
-      const contract = new ethers.Contract(NFTContract1Data.contractAddress, NFTContract1Data.abi, signer);
+      const contract = new ethers.Contract(
+        NFTContract1Data.contractAddress,
+        NFTContract1Data.abi,
+        signer
+      );
 
       const nftPrice = ethers.parseUnits("0.5", "ether");
       const tx = await contract.buyNFT({ value: nftPrice });
@@ -96,7 +104,11 @@ const NFTBuySection = () => {
       setIsBuyingNFT2(true);
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
-      const contract = new ethers.Contract(NFTContract2Data.contractAddress, NFTContract2Data.abi, signer);
+      const contract = new ethers.Contract(
+        NFTContract2Data.contractAddress,
+        NFTContract2Data.abi,
+        signer
+      );
 
       const nftPrice = ethers.parseUnits("0.5", "ether");
       const tx = await contract.buyNFT({ value: nftPrice });
@@ -111,19 +123,21 @@ const NFTBuySection = () => {
     }
   };
 
+    //-------------------------------------------------------------------------------------------------------------------------------------------------------------- //
+
   return (
-    <div className="text-center flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="flex justify-around mt-8 max-w-5xl w-full">
-        <div className="flex flex-col items-center bg-white p-4 rounded-lg shadow-lg border-4 border-blue-500">
+    <div className="text-center flex justify-center items-center min-h-96"> 
+      <div className="flex justify-around max-w-7xl w-full">
+        <div className="flex flex-col items-center">
           <img
             src="https://sapphire-accepted-dragonfly-363.mypinata.cloud/ipfs/QmPWGzHxMHMmB8gHxfN4RokYiUsxbKydiCromebVkTFeyE"
             alt="Main NFT"
-            className="w-64 h-64 rounded-md shadow-md transition-transform transform hover:scale-105"
+            className="w24 h-64 rounded-md transition-transform transform hover:scale-105"
           />
           <button
             onClick={account ? handleBuyNFT : connectToMetaMask}
             disabled={isConnecting || isBuyingMainNFT}
-            className="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-6 rounded-lg transition-colors disabled:opacity-50 mt-4 shadow-md"
+            className="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded-lg transition-colors disabled:opacity-50 mt-2"
           >
             {isConnecting
               ? "Connecting..."
@@ -134,16 +148,16 @@ const NFTBuySection = () => {
               : "Connect to MetaMask"}
           </button>
         </div>
-        <div className="flex flex-col items-center bg-white p-4 rounded-lg shadow-lg border-4 border-blue-500">
+        <div className="flex flex-col items-center">
           <img
             src="https://sapphire-accepted-dragonfly-363.mypinata.cloud/ipfs/QmPWGzHxMHMmB8gHxfN4RokYiUsxbKydiCromebVkTFeyE"
             alt="NFT Contract 1"
-            className="w-64 h-64 rounded-md shadow-md transition-transform transform hover:scale-105"
+            className="w24 h-64 rounded-md transition-transform transform hover:scale-105"
           />
           <button
             onClick={account ? handleBuyNFTContract1 : connectToMetaMask}
             disabled={isConnecting || isBuyingNFT1}
-            className="bg-cyan-500 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors disabled:opacity-50 mt-4 shadow-md"
+            className="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded-lg transition-colors disabled:opacity-50 mt-2"
           >
             {isConnecting
               ? "Connecting..."
@@ -152,16 +166,16 @@ const NFTBuySection = () => {
               : "Buy NFT 1 for 0.5 MATIC"}
           </button>
         </div>
-        <div className="flex flex-col items-center bg-white p-4 rounded-lg shadow-lg border-4 border-blue-500">
+        <div className="flex flex-col items-center">
           <img
             src="https://sapphire-accepted-dragonfly-363.mypinata.cloud/ipfs/QmPWGzHxMHMmB8gHxfN4RokYiUsxbKydiCromebVkTFeyE"
             alt="NFT Contract 2"
-            className="w-64 h-64 rounded-md shadow-md transition-transform transform hover:scale-105"
+            className="w24 h-64 rounded-md transition-transform transform hover:scale-105"
           />
           <button
             onClick={account ? handleBuyNFTContract2 : connectToMetaMask}
             disabled={isConnecting || isBuyingNFT2}
-            className="bg-cyan-500 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors disabled:opacity-50 mt-4 shadow-md"
+            className="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded-lg transition-colors disabled:opacity-50 mt-2"
           >
             {isConnecting
               ? "Connecting..."
@@ -174,6 +188,4 @@ const NFTBuySection = () => {
     </div>
   );
 };
-
 export default NFTBuySection;
-

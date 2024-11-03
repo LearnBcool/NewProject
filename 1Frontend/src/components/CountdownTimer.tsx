@@ -1,13 +1,13 @@
 
 // src/components/CountdownTimer.tsx
 import React, { useState, useEffect } from 'react';
-import './CountdownTimer.css';
 
 interface CountdownTimerProps {
   targetDate: Date;
+  message?: string;  // Adicionamos a propriedade opcional "message"
 }
 
-const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate }) => {
+const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate, message }) => {
   const calculateTimeLeft = () => {
     const difference = +targetDate - +new Date();
     let timeLeft = {
@@ -40,18 +40,25 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate }) => {
   }, [targetDate]);
 
   return (
-    <div className="countdown">
-      <div>
-        <span>{timeLeft.days}</span> Dias
-      </div>
-      <div>
-        <span>{timeLeft.hours}</span> Horas
-      </div>
-      <div>
-        <span>{timeLeft.minutes}</span> Minutos
-      </div>
-      <div>
-        <span>{timeLeft.seconds}</span> Segundos
+    <div className="flex flex-col items-center justify-center text-center p-4">
+      {message && (
+        <h2 className="text-2xl font-bold text-white bg-orange-500 py-2 px-4 rounded-lg shadow-md mb-4">
+          {message} {/* Mensagem exibida acima do timer */}
+        </h2>
+      )}
+      <div className="flex space-x-4 text-lg font-semibold">
+        <div>
+          <span>{timeLeft.days}</span> Dias
+        </div>
+        <div>
+          <span>{timeLeft.hours}</span> Horas
+        </div>
+        <div>
+          <span>{timeLeft.minutes}</span> Minutos
+        </div>
+        <div>
+          <span>{timeLeft.seconds}</span> Segundos
+        </div>
       </div>
     </div>
   );
