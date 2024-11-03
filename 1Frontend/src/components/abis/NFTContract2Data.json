@@ -1,0 +1,7 @@
+{
+  "contractAddress": "",
+  "network": "Polygon Amoy Testnet",
+  "rpcUrl": "https://rpc-amoy.polygon.technology/",
+  "chainId": 80002,
+  "abi": [[1, 2, 3, 4, 5, 6, 7, 8, 9]]
+}

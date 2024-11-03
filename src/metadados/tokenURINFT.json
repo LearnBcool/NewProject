@@ -1,11 +1,12 @@
 {
-    "name": "DAPP TIMTIN",
-    "description": "Blockchain para DEVs - 2024 Mobiup Nearx",
-    "image": "https://sapphire-accepted-dragonfly-363.mypinata.cloud/ipfs/QmeRMn7dJRXoz9LkT89WBdNVanq1DffsmzcwjokexF73R6",
+    "name": "NFT TIMTIN",
+    "description": "The official journey to the implementation metadata for an NFT TIMTIN",
+    "image": "https://yellow-glad-meadowlark-949.mypinata.cloud/ipfs/QmY9PR7kTD8jB13QNdkPNEHgY7tuXtkhNzzJY23HXx4gkN",
     "attributes": [
       {
         "trait_type": "Programmer",
         "value": "Legendary"
+
       }
     ]
   }

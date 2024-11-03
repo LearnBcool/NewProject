@@ -1,0 +1,19 @@
+{
+    "name": "OpenSea Creatures",
+    "description": "OpenSea Creatures are adorable aquatic beings primarily for demonstrating what can be done using the OpenSea platform. Adopt one today to try out all the OpenSea buying, selling, and bidding feature set.",
+    "image": "https://external-link-url.com/image.png",
+    "banner_image": "https://external-link-url.com/banner-image.png",
+    "featured_image": "https://external-link-url.com/featured-image.png",
+    "external_link": "https://external-link-url.com",
+    "collaborators": ["0x0000000000000000000000000000000000000000"]
+  }
+
+
+  contract MyCollectible is ERC721 {
+    function contractURI() public view returns (string memory) {
+        return "ipfs://QmTNgv3jx2HHfBjQX9RnKtxj2xv2xQDtbVXoRi5rJ3a46e";
+        // or e.g. https://external-link-url.com/my-contract-metadata.json
+    }
+}
+
+//verificar banner para Testnet OpenSea -> 
