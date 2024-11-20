@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
-import { abi as DescenTokenABI } from "./abis/DescenTokenABI.json";
+import { abi, contractAddress } from "./abis/DescenTokenABI.json";
 
 const BuyTokenButton = () => {
   const [account, setAccount] = useState<string | null>(null);
@@ -8,8 +8,7 @@ const BuyTokenButton = () => {
   const [isBuying, setIsBuying] = useState(false);
   const [amount, setAmount] = useState<number>(0);
 
-  const contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS as string;
-  const pricePerToken = ethers.parseUnits("0.5", "ether"); // Preço de 0.005 Ether por token
+  const pricePerToken = ethers.parseUnits("0.005", "ether"); // Preço de 0.005 Ether por token
 
   const connectToMetaMask = async () => {
     try {
@@ -22,7 +21,7 @@ const BuyTokenButton = () => {
       const accounts = await window.ethereum.request({
         method: "eth_requestAccounts",
       });
-      setAccount(accounts[0]); // Atualiza o estado com a conta conectada.
+      setAccount(accounts[0]);
 
       const networkId = await window.ethereum.request({
         method: "net_version",
@@ -30,7 +29,7 @@ const BuyTokenButton = () => {
 
       if (networkId !== "80002") {
         alert("Please connect to the Polygon Amoy Testnet!");
-        disconnect(); // Desconecta se a rede estiver errada.
+        disconnect();
       }
     } catch (error) {
       console.error("Error connecting to MetaMask:", error);
@@ -57,13 +56,12 @@ const BuyTokenButton = () => {
     try {
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
-      const contract = new ethers.Contract(contractAddress, DescenTokenABI, signer);
+      const contract = new ethers.Contract(contractAddress, abi, signer);
 
-      const totalCost = pricePerToken * BigInt(amount);
+      const cost = pricePerToken * BigInt(amount); // Usando BigInt para cálculos
 
-      // Chama a função de compra do contrato
       const tx = await contract.buy(amount, ethers.ZeroAddress, {
-        value: totalCost,
+        value: cost,
       });
 
       await tx.wait();
@@ -76,7 +74,6 @@ const BuyTokenButton = () => {
     }
   };
 
-  // Atualiza estado ao mudar de conta na MetaMask.
   useEffect(() => {
     if (window.ethereum) {
       window.ethereum.on("accountsChanged", (accounts: string[]) => {
@@ -96,7 +93,6 @@ const BuyTokenButton = () => {
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white rounded-lg shadow-xl">
-      {/* Conectar com MetaMask */}
       {!account ? (
         <button
           onClick={connectToMetaMask}
@@ -119,7 +115,6 @@ const BuyTokenButton = () => {
         </div>
       )}
 
-      {/* Entrada de quantidade de tokens */}
       {account && (
         <div className="text-center">
           <input
@@ -146,7 +141,6 @@ const BuyTokenButton = () => {
 };
 
 export default BuyTokenButton;
-
 
 
 
