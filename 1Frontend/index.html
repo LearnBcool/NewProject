@@ -4,12 +4,24 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <div id="tsparticles"></div>
-    <script src="tsparticles.engine.min.js"></script>
-    <title>NewProject</title>
+    <title>ProjectNearXMobiup</title>
+
+    <!-- Carregar o CSS do Tailwind (gerado pelo build do Tailwind) -->
+    <link href="/dist/output.css" rel="stylesheet">
   </head>
+
   <body>
+    <!-- Div para o background de partículas -->
+    <div id="tsparticles"></div>
+
+    <!-- Root element onde a aplicação React será renderizada -->
     <div id="root"></div>
+
+    <!-- Carregar o script necessário para o React -->
     <script type="module" src="/src/main.tsx"></script>
+
+    <!-- Carregar o script do tsparticles -->
+    <!-- Idealmente, você deve inicializar o tsparticles no seu componente React, não globalmente aqui -->
+    <script src="tsparticles.engine.min.js"></script>
   </body>
 </html>

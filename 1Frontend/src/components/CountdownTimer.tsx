@@ -1,65 +1,42 @@
-
-// src/components/CountdownTimer.tsx
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from "react";
 
 interface CountdownTimerProps {
   targetDate: Date;
-  message?: string;  // Adicionamos a propriedade opcional "message"
+  message: string;
 }
 
 const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate, message }) => {
-  const calculateTimeLeft = () => {
-    const difference = +targetDate - +new Date();
-    let timeLeft = {
-      days: 0,
-      hours: 0,
-      minutes: 0,
-      seconds: 0,
-    };
-
-    if (difference > 0) {
-      timeLeft = {
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((difference / 1000 / 60) % 60),
-        seconds: Math.floor((difference / 1000) % 60),
-      };
-    }
-
-    return timeLeft;
-  };
-
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+  const [timeLeft, setTimeLeft] = useState<string>("");
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft(calculateTimeLeft());
+    const interval = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetDate.getTime() - now;
+
+      if (distance <= 0) {
+        clearInterval(interval);
+        setTimeLeft("Time's up!");
+      } else {
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        setTimeLeft(`${days}d ${hours}h ${minutes}m ${seconds}s`);
+      }
     }, 1000);
 
-    return () => clearInterval(timer);
+    return () => clearInterval(interval);
   }, [targetDate]);
 
   return (
-    <div className="flex flex-col items-center justify-center text-center p-4">
-      {message && (
-        <h2 className="text-2xl font-bold text-white bg-orange-500 py-2 px-4 rounded-lg shadow-md mb-4">
-          {message} {/* Mensagem exibida acima do timer */}
-        </h2>
-      )}
-      <div className="flex space-x-4 text-lg font-semibold">
-        <div>
-          <span>{timeLeft.days}</span> Dias
-        </div>
-        <div>
-          <span>{timeLeft.hours}</span> Horas
-        </div>
-        <div>
-          <span>{timeLeft.minutes}</span> Minutos
-        </div>
-        <div>
-          <span>{timeLeft.seconds}</span> Segundos
-        </div>
+    <div className="text-center mt-16">
+      {/* Animação da mensagem dinâmica */}
+      <div className="text-lg font-semibold italic mb-1 text-white">
+        <span className="inline-block animate-shake animate-colorChange text-xl font-bold">
+          {message}
+        </span>
       </div>
+      <div className="text-4xl font-extrabold text-yellow-300 tracking-wide">{timeLeft}</div>
     </div>
   );
 };

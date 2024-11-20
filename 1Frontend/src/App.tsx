@@ -1,68 +1,68 @@
 import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import NFTBuySection from "./components/NFTBuySection";
 import Footer from "./components/Footer";
-import Header from "./components/Header";
+import Navbar from "./components/Navbar";
 import Content from "./components/Content";
 import CountdownTimer from "./components/CountdownTimer";
+import PrivacyPolicy from "./components/sub-components/PrivacyPolicy";
+import TermsOfUse from "./components/sub-components/TermsOfUse";
 import ParticlesBackground from "./components/ParticlesBackground";
-import TokenBuy from "./components/TokenBuy";
+import BuyTokenButton from "./components/BuyTokenButton";
+
+// Calculando a data alvo específica para o CountdownTimer
+const targetDate = new Date("2025-04-20T00:00:00"); // Exemplo: 20 de abril de 2025 à meia-noite
 
 const App: React.FC = () => {
-  // Define a data alvo para a contagem regressiva
-  const targetDate = new Date("2024-11-07T23:59:59");
-
   return (
-    <div style={{ position: "relative", overflow: "hidden" }}>
-      {/* Fundo de partículas */}
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          zIndex: -1,
-        }}
-      >
-        <ParticlesBackground />
-      </div>
+    <Router>
+      {/* Background de partículas cobrindo toda a página */}
+      <ParticlesBackground /> 
 
-      {/* Conteúdo principal da página */}
-      <div
-        className="content flex flex-col min-h-screen"
-        style={{ position: "relative", zIndex: 1 }}
-      >
-        {/* Cabeçalho */}
-        <Header />
+      {/* Conteúdo principal com z-index maior para garantir interatividade */}
+      <div className="relative z-10 flex flex-col min-h-screen">
+        {/* Header sem botão de conexão */}
+        <Navbar />
 
-        {/* Conteúdo principal */}
-        <main className="flex-grow">
-          {/* Seção do Timer */}
-          <div className="container mx-auto p-4 text-center">
-            <CountdownTimer
-              targetDate={targetDate}
-              message="BTC 120K, get ready for next run!"
+        {/* Countdown Timer fixo abaixo do Header */}
+        <CountdownTimer
+          targetDate={targetDate}
+          message="BTC 120K, get ready for next run!"
+        />
+
+        <main className="flex-grow flex items-center justify-center">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <div className="container mx-auto p-8 text-center text-white">
+                  {/* Seção para o botão de compra de tokens */}
+                  <div className="mb-8">
+                    <BuyTokenButton />
+                  </div>
+                  {/* Seção para a compra de NFTs */}
+                  <div className="mb-8">
+                    <NFTBuySection />
+                  </div>
+                  {/* Conteúdo principal */}
+                  <div>
+                    <Content />
+                  </div>
+                </div>
+              }
             />
-
-            {/* Seção de compra de NFT */}
-            <div className="container mx-auto p-4">
-              <TokenBuy />
-              {/* Seção de compra de Tokens */}
-              <NFTBuySection />
-            </div>
-
-            {/* Conteúdo com imagem e texto */}
-            <div className="container mx-auto p-4">
-              <Content />
-            </div>
-          </div>
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-use" element={<TermsOfUse />} />
+          </Routes>
         </main>
 
-        {/* Rodapé */}
         <Footer />
       </div>
-    </div>
+    </Router>
   );
 };
 
 export default App;
+
+
+

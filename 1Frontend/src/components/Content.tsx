@@ -1,6 +1,6 @@
 const Content: React.FC = () => {
   return (
-    <div className="container mx-auto py-8">
+    <div className="container mx-auto py-8 text-white">
       {/* Imagem + Texto */}
       <div className="flex flex-col md:flex-row items-center mb-8">
         <img
