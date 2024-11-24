@@ -52,3 +52,17 @@
   
 }
 
+
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+button {
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #4a60e6;
+}

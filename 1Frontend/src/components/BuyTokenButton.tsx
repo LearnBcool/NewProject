@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import { abi, contractAddress } from "./abis/DescenTokenABI.json";
+import ConnectionManager from "./ConnectionManager";
 
 const BuyTokenButton: React.FC = () => {
   const [account, setAccount] = useState<string | null>(null);
@@ -10,7 +11,6 @@ const BuyTokenButton: React.FC = () => {
   const [isBuying, setIsBuying] = useState(false);
   const [transactionStatus, setTransactionStatus] = useState<string>("");
 
-  // Carregar o preço por token ao carregar o componente
   useEffect(() => {
     const fetchPrice = async () => {
       if (!window.ethereum) return;
@@ -22,23 +22,6 @@ const BuyTokenButton: React.FC = () => {
     fetchPrice();
   }, []);
 
-  // Conectar ao MetaMask
-  const connectToMetaMask = async () => {
-    try {
-      if (!window.ethereum) {
-        alert("MetaMask not found. Please install it.");
-        return;
-      }
-      const accounts = await window.ethereum.request({
-        method: "eth_requestAccounts",
-      });
-      setAccount(accounts[0]);
-    } catch (error) {
-      console.error("Error connecting to MetaMask:", error);
-    }
-  };
-
-  // Atualizar a quantidade de tokens a serem comprados
   const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const input = parseInt(event.target.value) || 0;
     setAmountToBuy(input);
@@ -46,7 +29,6 @@ const BuyTokenButton: React.FC = () => {
     setTotalCost(cost.toString());
   };
 
-  // Função para comprar tokens
   const buyTokens = async () => {
     if (!account) {
       alert("Connect your wallet first!");
@@ -64,13 +46,10 @@ const BuyTokenButton: React.FC = () => {
       const signer = await provider.getSigner();
       const contract = new ethers.Contract(contractAddress, abi, signer);
 
-      // Calcular o custo total em Wei (MATIC)
-      const costInWei = ethers.parseUnits(totalCost, 18); // Ajuste para wei
+      const costInWei = ethers.parseUnits(totalCost, 18);
       const tx = await contract.buy(amountToBuy, { value: costInWei });
 
-      // Aguardar confirmação da transação
       await tx.wait();
-
       setTransactionStatus(`Successfully purchased ${amountToBuy} tokens!`);
     } catch (error) {
       console.error("Error buying tokens:", error);
@@ -86,12 +65,7 @@ const BuyTokenButton: React.FC = () => {
         Buy <span className="text-indigo-500">DEFLATOR</span> Tokens
       </h2>
       {!account ? (
-        <button
-          onClick={connectToMetaMask}
-          className="w-full px-4 py-2 bg-indigo-600 text-white font-semibold rounded-md hover:bg-indigo-700 focus:ring focus:ring-indigo-300"
-        >
-          Connect Wallet
-        </button>
+        <ConnectionManager onAccountConnected={setAccount} />
       ) : (
         <>
           <p className="text-sm text-gray-600 text-center mb-4">
