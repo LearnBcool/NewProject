@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 import "@openzeppelin/contracts/utils/Pausable.sol";
 
-contract DescenToken is ERC20Burnable, Ownable, ReentrancyGuard, Pausable {
+contract MyFirstProjectDapp is ERC20Burnable, Ownable, ReentrancyGuard, Pausable {
     uint256 public pricePerToken; // Preço do token em wei (0.0005 MATIC)
     uint256 public totalTokensSold; // Total de tokens vendidos
 
@@ -40,7 +40,7 @@ contract DescenToken is ERC20Burnable, Ownable, ReentrancyGuard, Pausable {
 
     TransferStruct[] public transactions; // Histórico de transferências
 
-    constructor() ERC20("DEFLATOR", "DFR") Ownable(msg.sender) {
+    constructor() ERC20("MOBIUP", "NEARX") Ownable(msg.sender) {
         // Inicializa o contrato com 1 milhão de tokens
         _mint(address(this), 1_000_000 * 10**decimals());
         // Define o preço inicial: 0.0005 MATIC em wei

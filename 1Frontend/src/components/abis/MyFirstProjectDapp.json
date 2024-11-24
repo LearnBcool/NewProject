@@ -1,5 +1,5 @@
 {
-  "contractAddress": "0xd77C3A612A317f5EcdFad69e698B57ed23a24120",
+  "contractAddress": "0x7856fc8c4dFf77049713356708Dd7FCFE9A1F43b",
   "network": "Polygon Amoy Testnet",
   "rpcUrl": "https://rpc-amoy.polygon.technology/",
   "chainId": 80002,
@@ -320,7 +320,7 @@
             },
             { "internalType": "string", "name": "keyword", "type": "string" }
           ],
-          "internalType": "struct DescenToken.TransferStruct[]",
+          "internalType": "struct MyFirstProjectDapp.TransferStruct[]",
           "name": "",
           "type": "tuple[]"
         }
