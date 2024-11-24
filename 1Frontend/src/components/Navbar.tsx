@@ -1,32 +1,77 @@
-import React from 'react';
-import { FaTelegram, FaFileAlt } from 'react-icons/fa';
-import { FaXTwitter } from 'react-icons/fa6';
+// Navbar.tsx
+import React, { useState, FC } from "react";
+import { HiMenuAlt4 } from "react-icons/hi";
+import { AiOutlineClose } from "react-icons/ai";
 
-const Navbar: React.FC = () => {
+import logo from "../../public/img/Mobiupcrafiti.png";
+
+interface NavItemProps {
+  title: string;
+  classProps?: string;
+}
+
+const NavigationItem: FC<NavItemProps> = ({ title, classProps }) => (
+  <li className={`mx-4 cursor-pointer ${classProps}`}>{title}</li>
+);
+
+const Navbar: FC = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
-    <header className="bg-cyan-500 text-white bg-opacity-0 py-5 fixed w-full top-0 z-50">
-      <nav className="flex justify-center items-center space-x-11">
-        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="flex items-center hover:underline">
-          <FaXTwitter className="mr-2" size={20} /> 
-          Twitter
-        </a>
-        <a href="https://telegram.org" target="_blank" rel="noopener noreferrer" className="flex items-center hover:underline">
-          <FaTelegram className="mr-2" size={20} />
-          Telegram
-        </a>
-        <a href="https://app.gitbook.com/" target="_blank" rel="noopener noreferrer" className="flex items-center hover:underline">
-          <FaFileAlt className="mr-2" size={20} />
-          Docs
-        </a>
-
-        {/* O botão de conexão com carteira foi removido */}
+    <>
+      {/* Navbar fixa no topo */}
+      <nav className="w-full fixed top-0 left-0 z-50 bg-black flex md:justify-center justify-between items-center p-4 shadow-lg">
+        <div className="md:flex-[0.5] flex-initial justify-center items-center">
+          <img src={logo} alt="logo" className="w-32 cursor-pointer" />
+        </div>
+        <ul className="text-white md:flex hidden list-none flex-row justify-between items-center flex-initial">
+          {["Market", "Exchange", "Tutorials", "Wallets"].map((item, index) => (
+            <NavigationItem key={`${item}-${index}`} title={item} />
+          ))}
+          <li className="bg-[#2952e3] py-2 px-7 mx-4 rounded-full cursor-pointer hover:bg-[#2546bd]">
+            Login
+          </li>
+        </ul>
+        <div className="flex relative">
+          {!isMenuOpen && (
+            <HiMenuAlt4
+              fontSize={28}
+              className="text-white md:hidden cursor-pointer"
+              onClick={() => setIsMenuOpen(true)}
+            />
+          )}
+          {isMenuOpen && (
+            <AiOutlineClose
+              fontSize={28}
+              className="text-white md:hidden cursor-pointer"
+              onClick={() => setIsMenuOpen(false)}
+            />
+          )}
+          {isMenuOpen && (
+            <ul
+              className="z-10 fixed top-0 right-0 p-3 w-[70vw] h-screen shadow-2xl md:hidden list-none
+              flex flex-col justify-start items-end rounded-md blue-glassmorphism text-white animate-slide-in bg-black"
+            >
+              <li className="text-xl w-full my-2">
+                <AiOutlineClose onClick={() => setIsMenuOpen(false)} />
+              </li>
+              {["Market", "Exchange", "Tutorials", "Wallets"].map((item, index) => (
+                <NavigationItem
+                  key={`${item}-${index}`}
+                  title={item}
+                  classProps="my-2 text-lg"
+                />
+              ))}
+            </ul>
+          )}
+        </div>
       </nav>
-    </header>
+      {/* Espaçamento abaixo do Navbar */}
+      <div className="h-16 md:h-20"></div>
+    </>
   );
 };
 
 export default Navbar;
-
-
 
 

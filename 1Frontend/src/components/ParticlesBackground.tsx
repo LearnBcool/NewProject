@@ -14,7 +14,7 @@ const ParticlesBackground = () => {
     }, []);
 
     return (
-        <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+        <div style={{ position: 'relative', width: '100%', height: '100%'}}>
             <Particles
                 id="tsparticles"
                 init={particlesInit}

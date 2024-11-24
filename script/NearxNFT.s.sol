@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.24;
 
 import {Script} from "forge-std/Script.sol";
 import {NearxNFT} from "../src/NearxNFT.sol";  // Certifique-se de ajustar o caminho corretamente

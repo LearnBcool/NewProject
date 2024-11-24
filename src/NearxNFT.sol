@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.24;
 
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
 contract NearxNFT is ERC721URIStorage {
     uint256 public tokenCounter; // Contador de NFT criados
-    string private contractURI = "https://yellow-glad-meadowlark-949.mypinata.cloud/ipfs/QmfPNnUffbZRDWqZzQsB9KuURYUBSRM33CQyEW7dEJSSsL"; // Variável para armazenar o URI do contrato
-    string private nftTokenURI = "https://yellow-glad-meadowlark-949.mypinata.cloud/ipfs/QmV9ELPVfNLVsorHTJU6znJqje7ucnGCKyYLRDM68eQAYr";
-    uint16 public MAX_SUPPLY = 10;
+    string private contractURI = "https://sapphire-accepted-dragonfly-363.mypinata.cloud/ipfs/QmVh5kfjXmCGXK13CxAKHmgxvydKx4SY9wnHxB4nUStocK"; // Variável para armazenar o URI do contrato
+    string private nftTokenURI = "https://sapphire-accepted-dragonfly-363.mypinata.cloud/ipfs/QmfEoiyphzTQXr4iRFHxUxg8KH7CZSCV1ji8g9mvR7SPrS";
+    uint16 public MAX_SUPPLY = 150;
 
-    constructor() ERC721("TIMTIN", "TMTN") {
+    constructor() ERC721("POP CULTURE POP", "PCP") {
         tokenCounter = 0;
     }
 

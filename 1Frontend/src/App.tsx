@@ -10,6 +10,7 @@ import TermsOfUse from "./components/sub-components/TermsOfUse";
 import ParticlesBackground from "./components/ParticlesBackground";
 import BuyTokenButton from "./components/BuyTokenButton";
 
+//import Loader from "./components/Loader";
 // Calculando a data alvo específica para o CountdownTimer
 const targetDate = new Date("2025-04-20T00:00:00"); // Exemplo: 20 de abril de 2025 à meia-noite
 
@@ -23,6 +24,8 @@ const App: React.FC = () => {
       <div className="relative z-10 flex flex-col min-h-screen">
         {/* Header sem botão de conexão */}
         <Navbar />
+       
+        {/*<Loader /> */} 
 
         {/* Countdown Timer fixo abaixo do Header */}
         <CountdownTimer

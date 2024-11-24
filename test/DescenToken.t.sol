@@ -2,90 +2,120 @@
 pragma solidity ^0.8.24;
 
 import "forge-std/Test.sol";
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "../src/DescenToken.sol";
 
-// Contrato Simulado de ERC20 com função mint
 contract MockERC20 is ERC20 {
-    constructor(string memory name, string memory symbol) ERC20(name, symbol) {}
+    constructor() ERC20("Mock Token", "MKT") {}
 
-    function mint(address to, uint256 amount) public {
+    function mint(address to, uint256 amount) external {
         _mint(to, amount);
     }
 }
 
 contract DescenTokenTest is Test {
-    DescenToken descenToken;
-    MockERC20 POL; // Usaremos MockERC20 para simular o token POL
-    address owner;
-    address user1;
-    address user2;
+    DescenToken public descenToken;
+    MockERC20 public token;
+
+    address public owner = address(0x1);
+    address public user1 = address(0x2);
+    address public user2 = address(0x3);
+
+    uint256 public initialSupply = 21_000_000 ether;
+    uint256 public pricePerToken = 0.005 ether;
 
     function setUp() public {
-        // Configuração inicial
-        owner = vm.addr(1);
-        user1 = vm.addr(2);
-        user2 = vm.addr(3);
+        // Deployando o token de teste ERC20
+        token = new MockERC20();
 
-        // Funde contas com ETH
-        vm.deal(owner, 100 ether);
-        vm.deal(user1, 10 ether);
-        vm.deal(user2, 10 ether);
-
-        // Implanta o contrato DescenToken
-        vm.startPrank(owner);
+        // Deployando o contrato DescenToken
+        vm.prank(owner);
         descenToken = new DescenToken();
-        POL = new MockERC20("POL", "POL"); // Cria o token POL simulado
-        vm.stopPrank();
 
-        // Mint tokens POL para user1
-        POL.mint(user1, 1000 ether);
+        // Adicionando o token ERC20 à lista de aceitos
+        vm.prank(owner);
+        descenToken.updateAcceptedToken(address(token), true);
     }
 
     function testBuyWithETH() public {
-        vm.startPrank(user1);
-        uint256 amount = 10;
+        uint256 amount = 10 ether;
         uint256 cost = descenToken.pricePerToken() * amount;
 
-        descenToken.buy{value: cost}(amount, address(0));
-
-        assertEq(descenToken.balanceOf(user1), amount);
+        vm.deal(user1, 100 ether); // Configura o saldo de ETH do comprador
+        vm.startPrank(user1);
+        descenToken.buy{value: cost}(amount, address(0)); // Compra com ETH
         vm.stopPrank();
+
+        // Verifica o saldo do comprador
+        uint256 buyerBalance = descenToken.balanceOf(user1);
+        assertEq(buyerBalance, amount, "Buyer did not receive the correct token amount");
+
+        // Verifica o saldo do contrato em ETH
+        uint256 contractBalance = address(descenToken).balance;
+        assertEq(contractBalance, cost, "Contract did not receive the correct ETH amount");
     }
 
     function testBuyWithERC20() public {
-        vm.startPrank(user1);
-        uint256 amount = 10;
+        uint256 amount = 10 ether;
         uint256 cost = descenToken.pricePerToken() * amount;
 
-        POL.approve(address(descenToken), cost);
+        // Mint tokens para o comprador e aprova o contrato
+        token.mint(user1, cost);
+        vm.startPrank(user1);
+        token.approve(address(descenToken), cost);
 
-        descenToken.buy(amount, address(POL));
-
-        assertEq(descenToken.balanceOf(user1), amount);
-        assertEq(POL.balanceOf(address(descenToken)), cost);
+        // Compra tokens com ERC20
+        descenToken.buy(amount, address(token));
         vm.stopPrank();
-    }
 
-    function testWithdrawTokens() public {
-        vm.startPrank(owner);
-        uint256 initialBalance = descenToken.balanceOf(owner);
-        uint256 amount = 100 ether;
+        // Verifica o saldo do comprador
+        uint256 buyerBalance = descenToken.balanceOf(user1);
+        assertEq(buyerBalance, amount, "Buyer did not receive the correct token amount");
 
-        descenToken.withdrawTokens(amount);
-
-        assertEq(descenToken.balanceOf(owner), initialBalance + amount);
-        vm.stopPrank();
+        // Verifica o saldo do contrato em ERC20
+        uint256 contractTokenBalance = token.balanceOf(address(descenToken));
+        assertEq(contractTokenBalance, cost, "Contract did not receive the correct ERC20 amount");
     }
 
     function testWithdrawEther() public {
-        vm.startPrank(owner);
-        uint256 initialBalance = owner.balance;
-        uint256 amount = 1 ether;
+        uint256 amount = 10 ether;
+        uint256 cost = descenToken.pricePerToken() * amount;
 
-        descenToken.withdrawEther(amount);
-
-        assertEq(owner.balance, initialBalance + amount);
+        // Compra tokens para o contrato ter saldo de ETH
+        vm.deal(user1, 100 ether);
+        vm.startPrank(user1);
+        descenToken.buy{value: cost}(amount, address(0));
         vm.stopPrank();
+
+        // Retira ETH do contrato como proprietário
+        vm.startPrank(owner);
+        uint256 contractBalanceBefore = address(descenToken).balance;
+        descenToken.withdrawEther(contractBalanceBefore);
+        vm.stopPrank();
+
+        // Verifica se o saldo do contrato foi zerado
+        uint256 contractBalanceAfter = address(descenToken).balance;
+        assertEq(contractBalanceAfter, 0, "Contract balance should be zero after withdrawal");
+
+        // Verifica se o saldo do proprietário aumentou
+        uint256 ownerBalance = owner.balance;
+        assertEq(ownerBalance, contractBalanceBefore, "Owner did not receive the correct ETH amount");
+    }
+
+    function testWithdrawTokens() public {
+        uint256 amount = 100 ether;
+
+        // Retira tokens remanescentes do contrato
+        vm.startPrank(owner);
+        uint256 contractTokenBalanceBefore = descenToken.balanceOf(address(descenToken));
+        descenToken.withdrawTokens(amount);
+        vm.stopPrank();
+
+        // Verifica se o saldo do contrato foi reduzido
+        uint256 contractTokenBalanceAfter = descenToken.balanceOf(address(descenToken));
+        assertEq(contractTokenBalanceAfter, contractTokenBalanceBefore - amount, "Contract token balance mismatch");
+
+        // Verifica se o proprietário recebeu os tokens
+        uint256 ownerBalance = descenToken.balanceOf(owner);
+        assertEq(ownerBalance, amount, "Owner did not receive the correct token amount");
     }
 }

@@ -1,5 +1,5 @@
 {
-  "contractAddress": "0x1d60C0F07846d709a56De9078597C11863878e62",
+  "contractAddress": "0x72Fbd2bc57e8360FD174893DEC149Ed6AD9A44cC",
   "network": "Polygon Amoy Testnet",
   "rpcUrl": "https://rpc-amoy.polygon.technology/",
   "chainId": 80002,
@@ -7,11 +7,7 @@
     { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" },
     {
       "inputs": [
-        {
-          "internalType": "address",
-          "name": "sender",
-          "type": "address"
-        },
+        { "internalType": "address", "name": "sender", "type": "address" },
         { "internalType": "uint256", "name": "tokenId", "type": "uint256" },
         { "internalType": "address", "name": "owner", "type": "address" }
       ],
@@ -179,20 +175,6 @@
       "inputs": [],
       "name": "MAX_SUPPLY",
       "outputs": [{ "internalType": "uint16", "name": "", "type": "uint16" }],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "_getTokenURI",
-      "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "_getnfTokenURI",
-      "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
       "stateMutability": "view",
       "type": "function"
     },

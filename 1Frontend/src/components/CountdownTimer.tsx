@@ -1,3 +1,4 @@
+// CountdownTimer.tsx
 import React, { useEffect, useState } from "react";
 
 interface CountdownTimerProps {
@@ -29,7 +30,7 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate, message }) 
   }, [targetDate]);
 
   return (
-    <div className="text-center mt-16">
+    <div className="text-center mt-44">
       {/* Animação da mensagem dinâmica */}
       <div className="text-lg font-semibold italic mb-1 text-white">
         <span className="inline-block animate-shake animate-colorChange text-xl font-bold">
@@ -42,3 +43,4 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate, message }) 
 };
 
 export default CountdownTimer;
+

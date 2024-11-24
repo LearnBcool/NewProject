@@ -17,11 +17,10 @@ const NFTBuySection = () => {
   const [isConnectingNFT2, setIsConnectingNFT2] = useState(false);
   const [isBuyingNFT2, setIsBuyingNFT2] = useState(false);
 
-
-  
-
   // Função de conexão genérica
-  const connectToMetaMask = async (setConnectingState: (connecting: boolean) => void) => {
+  const connectToMetaMask = async (
+    setConnectingState: (connecting: boolean) => void
+  ) => {
     try {
       if (window.ethereum) {
         setConnectingState(true);
@@ -130,72 +129,84 @@ const NFTBuySection = () => {
   //-------------------------------------------------------------------------------------------------------------------------------------------------------------- //
 
   return (
-  <div className="text-center flex justify-center items-center min-h-96"> 
-    <div className="flex justify-around max-w-7xl w-full gap-4">
-      {/* Main NFT */}
-      <div className="flex flex-col items-center w-1/3">
-        <img
-          src="https://sapphire-accepted-dragonfly-363.mypinata.cloud/ipfs/QmPWGzHxMHMmB8gHxfN4RokYiUsxbKydiCromebVkTFeyE"
-          alt="Main NFT"
-          className="w-64 h-64 rounded-md transition-transform transform hover:scale-105"
-        />
-        <button
-          onClick={account ? handleBuyNFT : () => connectToMetaMask(setIsConnectingMainNFT)}
-          disabled={isConnectingMainNFT || isBuyingMainNFT}
-          className="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded-lg transition-colors disabled:opacity-50 mt-2"
-        >
-          {isConnectingMainNFT
-            ? "Connecting..."
-            : isBuyingMainNFT
-            ? "Purchasing NFT..."
-            : account
-            ? "Buy NFT for 0.5 MATIC"
-            : "Connect to MetaMask"}
-        </button>
-      </div>
+    <div className="text-center flex justify-center items-center min-h-screen">
+      <div className="flex justify-around max-w-7xl w-full gap-4">
+        {/* Main NFT */}
+        <div className="flex flex-col items-center w-1/3">
+          <img
+            src="https://sapphire-accepted-dragonfly-363.mypinata.cloud/ipfs/QmP6YvXFdU6Fg3Gp8SY4eL2j7RfpDhXgH2npEnTQhKczQk"
+            alt="Main NFT"
+            className="w-full max-w-[400px] h-auto rounded-md transition-transform transform hover:scale-105 shadow-xl hover:shadow-2xl hover:shadow-pink-500/50"
+          />
+          <button
+            onClick={
+              account
+                ? handleBuyNFT
+                : () => connectToMetaMask(setIsConnectingMainNFT)
+            }
+            disabled={isConnectingMainNFT || isBuyingMainNFT}
+            className="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded-lg transition-colors disabled:opacity-50 mt-4"
+          >
+            {isConnectingMainNFT
+              ? "Connecting..."
+              : isBuyingMainNFT
+              ? "Purchasing NFT..."
+              : account
+              ? "Buy NFT for 0.5 MATIC"
+              : "Connect to MetaMask"}
+          </button>
+        </div>
 
-      {/* NFT Contract 1 */}
-      <div className="flex flex-col items-center w-1/3">
-        <img
-          src="https://sapphire-accepted-dragonfly-363.mypinata.cloud/ipfs/QmPWGzHxMHMmB8gHxfN4RokYiUsxbKydiCromebVkTFeyE"
-          alt="NFT Contract 1"
-          className="w-64 h-64 rounded-md transition-transform transform hover:scale-105"
-        />
-        <button
-          onClick={account ? handleBuyNFTContract1 : () => connectToMetaMask(setIsConnectingNFT1)}
-          disabled={isConnectingNFT1 || isBuyingNFT1}
-          className="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded-lg transition-colors disabled:opacity-50 mt-2"
-        >
-          {isConnectingNFT1
-            ? "Connecting..."
-            : isBuyingNFT1
-            ? "Purchasing NFT..."
-            : "Buy NFT 1 for 0.5 MATIC"}
-        </button>
-      </div>
+        {/* NFT Contract 1 */}
+        <div className="flex flex-col items-center w-1/3">
+          <img
+            src="https://sapphire-accepted-dragonfly-363.mypinata.cloud/ipfs/QmRksyyiYjcSmcd6z7YWjP3o95vj65uQUsary2miS9kaKv"
+            alt="NFT Contract 1"
+            className="w-full max-w-[400px] h-auto rounded-md transition-transform transform hover:scale-105 shadow-xl hover:shadow-2xl hover:shadow-pink-500/50"
+          />
+          <button
+            onClick={
+              account
+                ? handleBuyNFTContract1
+                : () => connectToMetaMask(setIsConnectingNFT1)
+            }
+            disabled={isConnectingNFT1 || isBuyingNFT1}
+            className="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded-lg transition-colors disabled:opacity-50 mt-4"
+          >
+            {isConnectingNFT1
+              ? "Connecting..."
+              : isBuyingNFT1
+              ? "Purchasing NFT..."
+              : "Buy NFT 1 for 0.5 MATIC"}
+          </button>
+        </div>
 
-      {/* NFT Contract 2 */}
-      <div className="flex flex-col items-center w-1/3">
-        <img
-          src="https://sapphire-accepted-dragonfly-363.mypinata.cloud/ipfs/QmPWGzHxMHMmB8gHxfN4RokYiUsxbKydiCromebVkTFeyE"
-          alt="NFT Contract 2"
-          className="w-64 h-64 rounded-md transition-transform transform hover:scale-105"
-        />
-        <button
-          onClick={account ? handleBuyNFTContract2 : () => connectToMetaMask(setIsConnectingNFT2)}
-          disabled={isConnectingNFT2 || isBuyingNFT2}
-          className="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded-lg transition-colors disabled:opacity-50 mt-2"
-        >
-          {isConnectingNFT2
-            ? "Connecting..."
-            : isBuyingNFT2
-            ? "Purchasing NFT..."
-            : "Buy NFT 2 for 0.5 MATIC"}
-        </button>
+        {/* NFT Contract 2 */}
+        <div className="flex flex-col items-center w-1/3">
+          <img
+            src="https://sapphire-accepted-dragonfly-363.mypinata.cloud/ipfs/QmWZozxu96wrFYhAHe2m7ncLrFMHFsBPXDGestJcDB7bNP"
+            alt="NFT Contract 2"
+            className="w-full max-w-[400px] h-auto rounded-md transition-transform transform hover:scale-105 shadow-xl hover:shadow-2xl hover:shadow-pink-500/50"
+          />
+          <button
+            onClick={
+              account
+                ? handleBuyNFTContract2
+                : () => connectToMetaMask(setIsConnectingNFT2)
+            }
+            disabled={isConnectingNFT2 || isBuyingNFT2}
+            className="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded-lg transition-colors disabled:opacity-50 mt-4"
+          >
+            {isConnectingNFT2
+              ? "Connecting..."
+              : isBuyingNFT2
+              ? "Purchasing NFT..."
+              : "Buy NFT 2 for 0.5 MATIC"}
+          </button>
+        </div>
       </div>
     </div>
-  </div>
-);
-}
+  );
+};
 
 export default NFTBuySection;

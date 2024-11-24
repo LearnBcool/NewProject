@@ -1,12 +1,11 @@
 {
-    "name": "NFT Programmer",
-    "description": "The official journey to the implementation metadata for an NFT",
-    "image": "https://yellow-glad-meadowlark-949.mypinata.cloud/ipfs/QmX8PdkWXAF8ujPT4i5Me7LvJGR5yornXW5zXJzrLKvjrL",
-    "attributes": [
-      {
-        "trait_type": "Programmer",
-        "value": "Mastery"
-
-      }
-    ]
-  }
+  "name": "Pop Culture Pop",
+  "description": "The official journey to discover Pop Culture Pop. Fight for your dreams.",
+  "image": "https://sapphire-accepted-dragonfly-363.mypinata.cloud/ipfs/QmP6YvXFdU6Fg3Gp8SY4eL2j7RfpDhXgH2npEnTQhKczQk",
+  "attributes": [
+    {
+      "trait_type": "Accessory",
+      "value": "Walkman"
+    }
+  ]
+}
